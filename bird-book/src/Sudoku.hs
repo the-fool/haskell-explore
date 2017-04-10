@@ -29,7 +29,9 @@ valid :: Grid -> Bool
 valid = const True
 
 expand :: Matrix [Digit] -> [Grid]
-expand = id
+expand = cp . map cp
 
 cp :: [[a]] -> [[a]]
-cp (xs:xss) = [x:ys | x <- xs, ys <- cp xss]
+cp [] = [[]]
+cp (xs:xss) = [x:ys | x <- xs, ys <- yss]
+  where yss = cp xss
